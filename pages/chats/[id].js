@@ -10,8 +10,7 @@ export default function Id({id}){
     const [user,loading]=useAuthState(auth);
     useEffect(()=>{
         async function temp(){
-            console.log(chats+" in useeffect");
-        const data=await getOneChat(user.email,id);
+        const data=await getOneChat(user?.email,id);
         setChats(data);
         }
         temp()
@@ -42,7 +41,6 @@ const style={
   }
 export async function getServerSideProps(context){
     const {params:{id:id}}=context;
-    console.log(context.query," query");
     return{
         props:{
             id:id
