@@ -1,13 +1,16 @@
 import { useState,useEffect } from "react";
 import styled from "styled-components";
-import { getOneChat,getPhotoUrl } from "../../util/util.firebase";
+import { getOneChat,getChats } from "../../util/util.firebase";
 import {useAuthState} from 'react-firebase-hooks/auth';
 import {auth} from '../../firebase/firebaseapp'
 import Sidebar from "../../components/sidebar/Sidebar";
 import Message from "../../components/message/Message";
+import {useRouter} from 'next/router';
 export default function Id({id}){
     const [chats,setChats]=useState([]);
     const [user,loading]=useAuthState(auth);
+    const router = useRouter();
+    console.log({router});
     useEffect(()=>{
         async function temp(){
         const data=await getOneChat(user?.email,id);

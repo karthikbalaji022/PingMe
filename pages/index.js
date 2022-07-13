@@ -22,7 +22,10 @@ const [user]=useAuthState(auth);
     </div>
   )
 }
+export async function getServerSideProps(context){
 
+  return {props:{}}
+}
 const style={
   main:styled.main`
   width:100%;
