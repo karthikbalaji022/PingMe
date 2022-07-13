@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { signInWithPopup, getAuth, GoogleAuthProvider } from "firebase/auth";
 import {doc,setDoc,serverTimestamp,getDoc,get} from 'firebase/firestore'
 import {useCollection} from 'react-firebase-hooks/firestore'
-
+import styled from 'styled-components'
 import {db,auth,provider} from './firebaseapp'
 
 function Login() {
@@ -47,12 +47,38 @@ function Login() {
         });
     }
   return (
-    <>
-      <div>Login</div>
+    <styles.logincontainer>
+      <h1>Ping Me!</h1>
+      <h3>Login</h3>
       <button type="button" onClick={handleLogin}>
         Signin with Google
       </button>
-    </>
+    </styles.logincontainer>
   );
 }
+const styles={
+  logincontainer: styled.div`
+  width:100%;
+  height:100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  >button{
+   background-color :black ;
+   color:white;
+   border-radius: 5px;
+   width:150px;
+   height:40px;
+   font-size: 16px;
+   cursor: pointer;
+   transition:all 300ms ease-in-out;
+   &:hover{
+    background-color : rgb(140, 236, 236);
+    color: black;
+   }
+  }
+  `
+}
+
 export default Login;

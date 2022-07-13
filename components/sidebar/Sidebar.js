@@ -15,6 +15,7 @@ export default function Sidebar({user,cur,pic}) {
     const [chatUser,setChatUser]=useState([]);
     const [loading,setLoading]=useState(false);
     const [newchat,setNewchat]=useState(false);
+    const [search,setSearch]=useState(null);
   const router=useRouter();
     useEffect(()=>{
       const data=getCurChats(user.email).then(res=>{
@@ -39,16 +40,20 @@ export default function Sidebar({user,cur,pic}) {
           router.push('/');
         }).catch(err=>{console.log({err})});
     };
+    function handleSearch(e){
+      const search=e.target.value;
+      setSearch(search);
+    }
     if(loading)
     return<>Loading...</>
 
   return (
-    <styles.container>
+    <styles.container >
       <HeadSide user={user} />
       <styles.sideMainCointainer>
         <styles.searchContainer>
           <Search />
-          <styles.input placeholder="Search chat" />
+          <styles.input placeholder="Search chat" onChange={handleSearch}/>
         </styles.searchContainer>
         <styles.SidebarButton onClick={handleClick}>Start a new chat</styles.SidebarButton>
         {newchat&&(
@@ -63,7 +68,14 @@ export default function Sidebar({user,cur,pic}) {
         )}
       </styles.sideMainCointainer>
       <styles.usersCardContainer>
-        {chatUser&&chatUser.map((item,ind)=>{
+        {chatUser&&chatUser.filter((item)=>{
+          if(search)
+          {
+            return item.receiver.includes(search);
+          }else{
+            return true;
+          }
+        }).map((item,ind)=>{
           return <Chatcard pic={pic} selected={item.id==cur} mail={item} key={ind} id={item.id} onClick={handleCardClick.bind(item)}/>
         })
 
@@ -78,6 +90,7 @@ const styles = {
     width: 100%;
     height: 100vh;
     border-right: 1px solid rgba(140, 236, 236);
+    
   `,
   sideMainCointainer: styled.div`
     width: 100%;

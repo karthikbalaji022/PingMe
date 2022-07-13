@@ -16,6 +16,7 @@ function HeadSide({ user }) {
     signOut(auth)
       .then((res) => {
         router.push("/");
+
       })
       .catch((err) => console.log(err));
   }
@@ -54,6 +55,7 @@ const styles = {
     top: 1;
     z-index: 100;
     background-color: rgb(140, 236, 236);
+    overflow: hidden;
   `,
   avatar: styled.div`
     width: 40px;
